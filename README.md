@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# Multimedia_App_Bounty
+This is a React application that provides file management functionalities. It allows users to upload, rename, delete, and download files, as well as view different types of files such as audio, video, documents, and images.
+-------------------------------------------------------------------------
+#### EXISTING FEATURES:
+- Rename files: Users can rename the uploaded files.
+- File breakdown: Users can view a pie chart and a bar chart that show the distribution of file types in the file list.
+- Download files: Users can download files by clicking the download button.
+- Delete files: Users can delete files from the file list.
+- View files: Users can click on a file to view it in the file viewer section.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### NEW ADDITIONS:
+- Upload files: A multimedia app is incomplete without an upload feature, as it helps the app to complete its function of data storage. With this feature, users can select and upload files from their local system. After selecting the file of their choice, the user is prompted to enter a name to save the file with, this feature validates the filename using a `validateFilename` event handler, this handler checks the name entered and ensures it is not empty and does not contain unwanted characters like forward slashes, this is to prevent the name from messing with the filepath. The upload feature also prevents saving two different files with the same name, in any case the user enters an already existing name while uploading a file, they get a prompt asking if they'd like to replace the existing file, as the name they entered already existed.
+- File filtering: Users can filter the file list by file type (video, audio, document, or image).This feature helps the user to narrow down searching for a file, in the case they forget the name they saved the file with, they can easily select the filetype in the filter dropdown and get all files with that filetype, this reduces the search field and makes finding files easier.
 
-## Available Scripts
+#### NOTE: 
+- Just like in the `Upload` feature, the `Rename` feature was also modified, to validate filenames before renaming, and prevent saving two files with the same name. So, if a user tries to rename a file with an already existing name, they get prompted to choose another name, as the filename already existed. This was done to complement the `Upload` feature, since 'preventing duplicate filenames' was included in it, and leaving the `Rename` feature as it was would defeat that purpose.
+----------------------------------------------------------------------------
+## EXPLANATION OF THE CODE:
 
-In the project directory, you can run:
+### Importing Dependencies:
+- `React`, `useState`, and `useEffect` are imported from the 'react' package to enable the use of React hooks.
+- `data` is imported from a local file (`data.js`) and represents the initial file data.
 
-### `npm start`
+### Importing Components:
+- The `Header` component is imported from './components/Header'.
+- The `AudioPlayer`, `DocumentViewer`, `VideoPlayer`, and `ImageViewer` components are imported from their respective locations.
+- Various Chart.js components and configurations are imported.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Function Component:
+- The `App` function component is defined, which represents the main application component.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### State Variables:
+Several state variables are initialized using the `useState` hook:
+- `myFiles` represents the array of files and is initially set to the data imported from `data.js`.
+- `selectedFile` represents the currently selected file and is initially set to `null`.
+- `filePath` represents the file server path and is initially set to "/file-server/".
+- `showChartModal` is a boolean flag to control the display of the chart modal and is initially set to `false`.
+- `selectedFilter` represents the selected filter option and is initially set to 'all'.
 
-### `npm test`
+### useEffect Hook:
+- The `useEffect` hook is used to set the initial `myFiles` state using the data imported from `data.js`. This effect runs only once during component initialization.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Bar Chart Options:
+- `barChartOptions` represents the configuration options for the bar chart displayed in the modal.
 
-### `npm run build`
+### Event Handlers:
+The contract provides several functions for managing quests and player interactions, including:
+- `handleFilterChange` is an event handler triggered when the filter option changes. It updates the `selectedFilter` state.
+- `handleUpload` is an event handler triggered when a file is uploaded. It prompts the user to enter the name they wish to store the uploaded file with, validates the filename, ensure filename doesn't already exist and updates the `myFiles` state accordingly. In the case the filename entered already exists, it propmts to replace the existing file with the new uploaded file.
+- `validateFilename` is a helper function to validate the filename entered by the user. It ensures the filename is not empty and does not contain unwanted characters like forward slashes. Doing this prevents the filename from messing with the filepath.
+- `getFileType` is a helper function that determines the file type based on its extension.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Rendered JSX:
+The JSX represents the structure and components of the application.
+- The chart modal displays a pie chart and a bar chart representing the file type breakdown.
+- The `Rename` button allows the user to rename the selected file, it throws an alert when an already existing name is entered, thereby, preventing duplicate filenames.
+- The `Files Breakdown` button triggers the display of the chart modal when clicked.
+- The `Download` button opens up the selected file and thereafter enables downloading the file using the file viewer's built in download feature.
+- The `Delete` button allows the user to delete the selected file, it does this by hiding the selected file from the list of files.
+- The `Upload` button uses the input element to allow users to upload files. It triggers the `handleUpload` event handler when clicked.
+- The `file filter select` element enables users to filter files based on their type.
+- The preview modal displays the selected file using the appropriate component based on its type (audio, document, video, or image).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The code provides file management functionality, allowing users to upload, filter, rename, delete, and download files. It also presents a chart modal with visualizations of the file type breakdown.
